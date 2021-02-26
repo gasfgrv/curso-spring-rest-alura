@@ -3,6 +3,7 @@ package br.com.alura.gusto.forum.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,8 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import br.com.alura.gusto.forum.controller.AutenticacaoViaTokenFilter;
 import br.com.alura.gusto.forum.repository.UsuarioRepository;
 
+import java.util.Locale;
+
 @Configuration
 @EnableWebSecurity
+@Profile(value = {"prod", "test"})
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -49,6 +53,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 				.antMatchers(HttpMethod.POST, "/auth").permitAll()
 				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("moderador".toUpperCase())
 				.anyRequest().authenticated()
 				.and().csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
