@@ -2,8 +2,8 @@ package br.com.alura.gusto.forum.config.validacao;
 
 public class ErroDeFromularioDto {
 
-	private String campo;
-	private String erro;
+	private final String campo;
+	private final String erro;
 
 	public ErroDeFromularioDto(String campo, String erro) {
 		this.campo = campo;

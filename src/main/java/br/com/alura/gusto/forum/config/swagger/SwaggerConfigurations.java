@@ -1,24 +1,24 @@
 package br.com.alura.gusto.forum.config.swagger;
 
-import java.util.Arrays;
-
+import br.com.alura.gusto.forum.modelo.Usuario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import br.com.alura.gusto.forum.modelo.Usuario;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.Arrays;
+
+import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 
 @Configuration
 public class SwaggerConfigurations {
 
 	@Bean
 	public Docket api() { // acessar via '/swagger-ui.html' 
-		return new Docket(DocumentationType.SWAGGER_2).select()
+		return new Docket(SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("br.com.alura.gusto.forum"))
 				.paths(PathSelectors.ant("/**")).build()
 				.ignoredParameterTypes(Usuario.class)
